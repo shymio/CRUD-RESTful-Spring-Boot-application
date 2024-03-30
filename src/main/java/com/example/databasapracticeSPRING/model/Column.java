@@ -1,4 +1,4 @@
-package com.example.databasapracticeSPRING;
+package com.example.databasapracticeSPRING.model;
 
 public class Column {
     private int belongsToTable;

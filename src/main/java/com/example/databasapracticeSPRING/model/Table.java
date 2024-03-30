@@ -1,6 +1,8 @@
-package com.example.databasapracticeSPRING;
+package com.example.databasapracticeSPRING.model;
 import java.io.FileWriter;
 import java.util.ArrayList;
+
+import com.example.databasapracticeSPRING.model.Column;
 import org.apache.commons.lang3.time.DateUtils;
 import java.util.Date;
 import java.util.Calendar;
@@ -39,11 +41,19 @@ public class Table {
         return dateFormat.format(date);
     }
 
+    public int size() {
+        return columns.size();
+    }
+
     public void setColumn(List<Column> columns) {this.columns = columns;}
     public List<Column> getColumn() {return columns;}
 
     public void addColumn(Column column) {
         this.columns.add(column);
+    }
+
+    public List<Column> getColumns() {
+        return columns;
     }
 
 //    public void addColumn(int belongsToTable, String phisical_name, String data_type, int field_length, String key_attribute, String comment) {
@@ -84,8 +94,8 @@ public class Table {
         }
     }
 
-    // Считывание из txt файла
-    public static List<Column> readFromFile(String filename, int[] columnWidths) {
+//     Считывание из txt файла
+    public List<Column> readFromFile(String filename, int[] columnWidths) {
         ArrayList<Column> columns = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
@@ -102,7 +112,7 @@ public class Table {
         return columns;
     }
 
-    // Вспомогательный метод для считывания из файла
+//     Вспомогательный метод для считывания из файла
     public static String[] parseFixedWidthString(String line, int[] columnWidths) {
         String[] columns = new String[columnWidths.length];
         int startPos = 0;
