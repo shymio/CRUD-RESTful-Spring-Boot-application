@@ -1,6 +1,7 @@
 package com.example.databasapracticeSPRING.model;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import com.example.databasapracticeSPRING.model.Column;
 import org.apache.commons.lang3.time.DateUtils;
@@ -11,6 +12,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 public class Table {
     private String phisical_name;
@@ -56,6 +59,28 @@ public class Table {
         return columns;
     }
 
+    public Column findColumn(UUID uuid) {
+        for (Column column : columns) {
+            if (column.getUuid().equals(uuid)) {
+                return column;
+            }
+        }
+        return null;
+    }
+
+    public ResponseEntity<Column> showColumn(UUID uuid) {
+        try {
+            Column foundService = findColumn(uuid);
+            if (foundService != null) {
+                return ResponseEntity.ok(foundService);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
 //    public void addColumn(int belongsToTable, String phisical_name, String data_type, int field_length, String key_attribute, String comment) {
 //        Column list = new Column(belongsToTable, phisical_name, data_type, field_length, key_attribute, comment);
 //        this.columns.add(list);
@@ -95,34 +120,34 @@ public class Table {
     }
 
 //     Считывание из txt файла
-    public List<Column> readFromFile(String filename, int[] columnWidths) {
-        ArrayList<Column> columns = new ArrayList<>();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = parseFixedWidthString(line, columnWidths);
-                Column column = new Column(Integer.parseInt(parts[0].trim()), parts[1].trim(), parts[2].trim(), Integer.parseInt(parts[3].trim()), parts[4].trim(), parts[5].trim());
-                columns.add(column);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return columns;
-    }
+//    public List<Column> readFromFile(String filename, int[] columnWidths) {
+//        ArrayList<Column> columns = new ArrayList<>();
+//
+//        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+//            String line;
+//            while ((line = br.readLine()) != null) {
+//                String[] parts = parseFixedWidthString(line, columnWidths);
+//                Column column = new Column(Integer.parseInt(parts[0].trim()), parts[1].trim(), parts[2].trim(), Integer.parseInt(parts[3].trim()), parts[4].trim(), parts[5].trim());
+//                columns.add(column);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return columns;
+//    }
 
 //     Вспомогательный метод для считывания из файла
-    public static String[] parseFixedWidthString(String line, int[] columnWidths) {
-        String[] columns = new String[columnWidths.length];
-        int startPos = 0;
-        for (int i = 0; i < columnWidths.length; i++) {
-            int endPos = startPos + columnWidths[i];
-            columns[i] = line.substring(startPos, Math.min(endPos, line.length()));
-            startPos = endPos;
-        }
-        return columns;
-    }
+//    public static String[] parseFixedWidthString(String line, int[] columnWidths) {
+//        String[] columns = new String[columnWidths.length];
+//        int startPos = 0;
+//        for (int i = 0; i < columnWidths.length; i++) {
+//            int endPos = startPos + columnWidths[i];
+//            columns[i] = line.substring(startPos, Math.min(endPos, line.length()));
+//            startPos = endPos;
+//        }
+//        return columns;
+//    }
 
     public Column getColumn(int index) {
         if (index >= 0 && index < columns.size()) {

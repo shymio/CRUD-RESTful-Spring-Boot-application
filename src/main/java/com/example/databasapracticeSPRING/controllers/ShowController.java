@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.UUID;
 
-@Controller
 public class ShowController {
 
     @PostMapping("/show")
-    public ResponseEntity<Table> showService(@RequestParam String tableName, HttpSession session) {
+    public ResponseEntity<Column> showService(@RequestParam("uuid") String uuidString, HttpSession session) {
         try {
-            DataBase dataBase = (DataBase) session.getAttribute("dataBase");
-            ResponseEntity<Table> response = dataBase.showService(tableName);
+            UUID uuid = UUID.fromString(uuidString);
+            Table table = (Table) session.getAttribute("table");
+            ResponseEntity<Column> response = table.showColumn(uuid);
 
             if (response.getStatusCode() == HttpStatus.NOT_FOUND) {
                 return response;

@@ -1,4 +1,5 @@
 package com.example.databasapracticeSPRING.model;
+import java.util.UUID;
 
 public class Column {
     private int belongsToTable;
@@ -7,14 +8,22 @@ public class Column {
     private int field_length;
     private String key_attribute;
     private String comment;
+    private UUID uuid;
 
-    public Column(int belongsToTable, String phisical_name, String data_type, int field_length, String key_attribute, String comment) {
+    public Column(UUID uuid, int belongsToTable, String phisical_name, String data_type, int field_length, String key_attribute, String comment) {
+        this.uuid = UUID.randomUUID();
         this.belongsToTable = belongsToTable;
         this.phisical_name = phisical_name;
         this.data_type = data_type;
         this.field_length = field_length;
         this.key_attribute = key_attribute;
         this.comment = comment;
+    }
+
+    public UUID getUuid() {return uuid;}
+
+    public void setUuid() {
+        this.uuid = UUID.randomUUID();
     }
 
     public void setBelongsToTable(int belongsToTable) {this.belongsToTable = belongsToTable;}
@@ -37,6 +46,7 @@ public class Column {
 
     public String toString() {
         return "\n" + "№ таблицы = " + belongsToTable + ", " +
+                "uuid = " + uuid + ", " +
                 "Имя колонки = " + phisical_name + ", " +
                 "Тип данных = " + data_type + ", " +
                 "Длина поля = " + field_length + ", " +
