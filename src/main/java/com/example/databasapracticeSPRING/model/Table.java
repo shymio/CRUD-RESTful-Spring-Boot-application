@@ -49,13 +49,12 @@ public class Table {
     }
 
     public void setColumn(List<Column> columns) {this.columns = columns;}
-    public List<Column> getColumn() {return columns;}
 
     public void addColumn(Column column) {
         this.columns.add(column);
     }
 
-    public List<Column> getColumns() {
+    public List<Column> getColumn() {
         return columns;
     }
 
@@ -80,74 +79,6 @@ public class Table {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
-
-//    public void addColumn(int belongsToTable, String phisical_name, String data_type, int field_length, String key_attribute, String comment) {
-//        Column list = new Column(belongsToTable, phisical_name, data_type, field_length, key_attribute, comment);
-//        this.columns.add(list);
-//    }
-
-    //запись в txt файл
-    public static void writeColumnsToFile(String filename, List<Column> columns, int[] columnWidths) {
-        try (FileWriter writer = new FileWriter(filename)) {
-
-            // Записываем данные о каждой колонке
-            for (Column column : columns) {
-                StringBuilder rowData = new StringBuilder();
-                rowData.append(fixWidthString(String.valueOf(column.getBelongsToTable()), columnWidths[0]));
-                rowData.append(fixWidthString(column.getName(), columnWidths[1]));
-                rowData.append(fixWidthString(column.getData_type(), columnWidths[2]));
-                rowData.append(fixWidthString(String.valueOf(column.getField_length()), columnWidths[3]));
-                rowData.append(fixWidthString(column.getKey_attribute(), columnWidths[4]));
-                rowData.append(fixWidthString(column.getComment(), columnWidths[5]));
-                writer.write(rowData.toString() + "\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Вспомогательный метод для выравнивания строки по заданной ширине колонки
-    public static String fixWidthString(String input, int width) {
-        if (input.length() >= width) {
-            return input.substring(0, width);
-        } else {
-            StringBuilder paddedString = new StringBuilder(input);
-            while (paddedString.length() < width) {
-                paddedString.append(" ");
-            }
-            return paddedString.toString();
-        }
-    }
-
-//     Считывание из txt файла
-//    public List<Column> readFromFile(String filename, int[] columnWidths) {
-//        ArrayList<Column> columns = new ArrayList<>();
-//
-//        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-//            String line;
-//            while ((line = br.readLine()) != null) {
-//                String[] parts = parseFixedWidthString(line, columnWidths);
-//                Column column = new Column(Integer.parseInt(parts[0].trim()), parts[1].trim(), parts[2].trim(), Integer.parseInt(parts[3].trim()), parts[4].trim(), parts[5].trim());
-//                columns.add(column);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return columns;
-//    }
-
-//     Вспомогательный метод для считывания из файла
-//    public static String[] parseFixedWidthString(String line, int[] columnWidths) {
-//        String[] columns = new String[columnWidths.length];
-//        int startPos = 0;
-//        for (int i = 0; i < columnWidths.length; i++) {
-//            int endPos = startPos + columnWidths[i];
-//            columns[i] = line.substring(startPos, Math.min(endPos, line.length()));
-//            startPos = endPos;
-//        }
-//        return columns;
-//    }
 
     public Column getColumn(int index) {
         if (index >= 0 && index < columns.size()) {
@@ -180,6 +111,6 @@ public class Table {
         return "\n" + "Имя таблицы = " + phisical_name + ' '
                 + "Описание = " + description + " "
                 + "Дата и время создания = " + creationDate + " "
-                + "Колонки: " + columns;
+                + "Колонки " + columns;
     }
 }

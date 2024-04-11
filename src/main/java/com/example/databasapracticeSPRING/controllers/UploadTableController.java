@@ -1,5 +1,7 @@
+
 package com.example.databasapracticeSPRING.controllers;
 
+import com.example.databasapracticeSPRING.model.DataBase;
 import com.example.databasapracticeSPRING.service.TableService;
 import com.example.databasapracticeSPRING.model.Column;
 import com.example.databasapracticeSPRING.model.Table;
@@ -14,40 +16,37 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
-
+import javax.script.ScriptContext;
 import java.util.List;
 
 @RestController
-public class UploadController {
+public class UploadTableController {
 
     private final TableService tableService;
 
     @Autowired
-    public UploadController(TableService columnService) {
+    public UploadTableController(TableService columnService) {
         this.tableService = columnService;
     }
 
-    @GetMapping("/columns")
+    @GetMapping("/tables")
     public ResponseEntity<String> getColumnsFromFile(@RequestParam String filename, @RequestParam int[] columnWidths, HttpSession session) {
-        List<Column> columns = tableService.readFromFile(filename, columnWidths);
+        List<Table> tables = tableService.readFromFileTable(filename, columnWidths);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=data.txt");
-        Table table = new Table();
-        for (Column column : columns) {
-            table.addColumn(column);
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "inline");
+        DataBase dataBase = new DataBase();
+        for (Table table : tables) {
+            dataBase.addTable(table);
         }
-
-        session.setAttribute("table", table);
+        session.setAttribute("dataBase", dataBase);
 
         return ResponseEntity.ok()
                 .headers(headers)
                 .contentType(MediaType.TEXT_PLAIN)
-                .body(table.toString());
+                .body(dataBase.toString());
     }
 }
 
 // такая ссылка для считывания из файла, но пока не работает
 // localhost:8080/columns?filename=columns.txt&columnWidths=3,10,10,3,8,20
-
-

@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -15,11 +16,13 @@ import java.util.UUID;
 public class ShowController {
 
     @PostMapping("/show")
-    public ResponseEntity<Column> showService(@RequestParam("uuid") String uuidString, HttpSession session) {
+    public ResponseEntity<Table> showTable(@RequestParam String tableName, HttpSession session) {
         try {
-            UUID uuid = UUID.fromString(uuidString);
-            Table table = (Table) session.getAttribute("table");
-            ResponseEntity<Column> response = table.showColumn(uuid);
+//            UUID uuid = UUID.fromString(uuidString);
+            DataBase dataBase = (DataBase) session.getAttribute("dataBase");
+            dataBase.findTable(tableName);
+
+            ResponseEntity<Table> response = dataBase.showTable(tableName);
 
             if (response.getStatusCode() == HttpStatus.NOT_FOUND) {
                 return response;

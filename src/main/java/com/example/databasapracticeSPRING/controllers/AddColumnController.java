@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AddColumnController {
 
-
     @PostMapping("/add_column")
     public ResponseEntity<?> addService(@ModelAttribute Column column,  HttpSession session) {
         Table table = (Table) session.getAttribute("table");
         table.addColumn(column);
-        return ResponseEntity.ok(table.getColumns());
+        return ResponseEntity.ok(table.getColumn());
     }
 }
