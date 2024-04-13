@@ -1,4 +1,2 @@
-89a0cf17-6169-4e17-ab4a-ec11a0d42304  users       ID        INT       10 PRIMARY Identifier          
-5fc95414-3398-415e-885e-7291ecb79e4e  users       UserName  VARCHAR   50 UNIQUE  Unique username     
-f731aed6-01d7-4466-8a73-ff6b5ca55bf5  products    Age       INT       3          Age in years        
-173ec589-4af2-408b-91c8-e75d08b1359d  iPhones     col       int       30         qwerty              
+4979da67-1aff-4c83-a220-1a689fb8a9d6  users       UserName  VARCHAR   50 UNIQUE  Unique username     
+7c0188bc-3c0e-4e9d-aa04-c0eab9d5d4bc  products    Age       INT       3          Age in years        

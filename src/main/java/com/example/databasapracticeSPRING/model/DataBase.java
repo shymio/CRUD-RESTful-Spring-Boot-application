@@ -31,6 +31,23 @@ public class DataBase {
         return null;
     }
 
+    public void removeTableByName(String tableName) {
+        Table tableToRemove = findTable(tableName);
+        if (tableToRemove != null) {
+            tables.remove(tableToRemove);
+        }
+    }
+
+
+//    public void removeTableByName(String tableName) {
+//        for (int i = 0; i < tables.size(); i++) {
+//            if (tables.get(i).getPhisical_name().equals(tableName)) {
+//                tables.remove(i);
+//                break;
+//            }
+//        }
+//    }
+
     public void addColumnsToTablesFromList(List<Column> columns) {
         for (Column column : columns) {
             for (Table table : tables) {

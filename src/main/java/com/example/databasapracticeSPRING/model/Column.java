@@ -1,4 +1,5 @@
 package com.example.databasapracticeSPRING.model;
+import java.util.List;
 import java.util.UUID;
 
 public class Column {
@@ -24,6 +25,22 @@ public class Column {
 
     public void setUuid() {
         this.uuid = UUID.randomUUID();
+    }
+
+    public static Column findColumn(UUID uuid, List<Column> columns) {
+        for (Column column : columns) {
+            if (column.getUuid().equals(uuid)) {
+                return column;
+            }
+        }
+        return null;
+    }
+
+    public static void deleteColumn(String uuidString, List<Column> columns) {
+        UUID uuid = UUID.fromString(uuidString);
+        Column foundColumn = findColumn(uuid, columns);
+        if (foundColumn != null)
+            columns.remove(foundColumn);
     }
 
     public void setBelongsToTable(String belongsToTable) {this.belongsToTable = belongsToTable;}

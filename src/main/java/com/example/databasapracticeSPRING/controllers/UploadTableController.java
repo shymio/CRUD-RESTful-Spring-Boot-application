@@ -8,6 +8,7 @@ import com.example.databasapracticeSPRING.model.Table;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +28,7 @@ public class UploadTableController {
         this.workWithFileService = workWithFileService;
     }
 
-    @GetMapping("/tables")
+    @PostMapping("/tables")
     public ResponseEntity<String> getColumnsFromFile(@RequestParam String filename, @RequestParam int[] columnWidths, HttpSession session) {
         DataBase dataBase = (DataBase) session.getAttribute("dataBase");
         List<Table> tables = workWithFileService.readFromFileTable(filename, columnWidths);

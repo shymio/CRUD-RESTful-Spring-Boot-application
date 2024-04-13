@@ -6,6 +6,7 @@ import com.example.databasapracticeSPRING.model.Column;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,7 +26,7 @@ public class UploadColumnController {
         this.workWithFileService = workWithFileService;
     }
 
-    @GetMapping("/columns")
+    @PostMapping("/columns")
     public ResponseEntity<String> getColumnsFromFile(@RequestParam String filename, @RequestParam int[] columnWidths, HttpSession session) {
         List<Column> columns = (List<Column>) session.getAttribute("columns");
         if (columns != null) {
