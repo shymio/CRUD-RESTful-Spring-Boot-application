@@ -2,11 +2,12 @@ package com.example.databasapracticeSPRING.model;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class DataBase {
     private List<Table> tables = new ArrayList<>();
 
@@ -20,6 +21,26 @@ public class DataBase {
 
     public int size() {
         return tables.size();
+    }
+
+    public void removeColumnFromTable(String tableName, String columnName) {
+        // Поиск таблицы по имени
+        Table foundTable = null;
+        for (Table table : tables) {
+            if (table.getPhisical_name().equals(tableName)) {
+                foundTable = table;
+                break;
+            }
+        }
+        // Проверка, найдена ли таблица
+        if (foundTable == null) {
+            throw new IllegalArgumentException("Таблица " + tableName + " не найдена.");
+        }
+        if (foundTable.getColumn(columnName) == null) {
+            throw new IllegalArgumentException("Колонка " + columnName + " не найдена в таблице " + tableName + ".");
+        }
+        // Удаление колонки
+        foundTable.removeColumn(columnName);
     }
 
     public Table findTable(String tableName) {
@@ -37,16 +58,6 @@ public class DataBase {
             tables.remove(tableToRemove);
         }
     }
-
-
-//    public void removeTableByName(String tableName) {
-//        for (int i = 0; i < tables.size(); i++) {
-//            if (tables.get(i).getPhisical_name().equals(tableName)) {
-//                tables.remove(i);
-//                break;
-//            }
-//        }
-//    }
 
     public void addColumnsToTablesFromList(List<Column> columns) {
         for (Column column : columns) {

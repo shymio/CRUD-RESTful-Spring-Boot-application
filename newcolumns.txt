@@ -1,2 +1,1 @@
-4979da67-1aff-4c83-a220-1a689fb8a9d6  users       UserName  VARCHAR   50 UNIQUE  Unique username     
-7c0188bc-3c0e-4e9d-aa04-c0eab9d5d4bc  products    Age       INT       3          Age in years        
+3d9e841e-3741-4ade-9110-5794b6d8b38a  products    Age       INT       3          Age in years        
