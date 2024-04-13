@@ -1,3 +1,3 @@
-4d8216ff-a7a4-409b-b2d0-a147d83e4dc0  1  ID        INT       10 PRIMARY Identifier          
-f491506d-8388-4686-a984-39a8143d8224  1  UserName  VARCHAR   50 UNIQUE  Unique username     
-bf63bad7-42ff-4eaf-bf10-080e5d31872e  2  Age       INT       3          Age in years        
+4d8216ff-a7a4-409b-b2d0-a147d83e4dc0  users       ID        INT       10 PRIMARY Identifier
+f491506d-8388-4686-a984-39a8143d8224  users       UserName  VARCHAR   50 UNIQUE  Unique username
+bf63bad7-42ff-4eaf-bf10-080e5d31872e  products    Age       INT       3          Age in years

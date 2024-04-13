@@ -18,10 +18,7 @@ public class InfoController {
 
     @GetMapping("/info")
     public ResponseEntity<?> getInfo(HttpSession session) {
-//        Table table = (Table) session.getAttribute("table");
-        List<Column> columns = (List<Column>) session.getAttribute("columns");
         DataBase dataBase = (DataBase) session.getAttribute("dataBase");
-//        dataBase.addColumnsToTablesFromList(columns);
         Map<String, Object> information = new LinkedHashMap<>(); // Changed to Object type
         information.put("name", "Table");
         information.put("version", "1.0");

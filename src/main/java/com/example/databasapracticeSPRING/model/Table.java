@@ -21,7 +21,7 @@ public class Table {
     private String creationDate;
     private List<Column> columns = new ArrayList<>();
 
-    public Table(String phisical_name, String description, String date_time) {
+    public Table(String phisical_name, String description, String creationDate) {
         this.phisical_name = phisical_name;
         this.description = description;
         this.creationDate = formatDate(DateUtils.truncate(new Date(), Calendar.MINUTE));
@@ -79,6 +79,31 @@ public class Table {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
+
+    public ResponseEntity<String> deleteColumn(String uuidString) {
+        try {
+            UUID uuid = UUID.fromString(uuidString);
+            Column foundColumn = findColumn(uuid);
+            if (foundColumn != null) {
+                columns.remove(foundColumn);
+                return ResponseEntity.ok().body("Колонка успешно удалена");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Колонка не найдена");
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Неверный формат UUID");
+        }
+    }
+
+
+//    public void deleteColumn(String uuidString) {
+//        UUID uuid = UUID.fromString(uuidString);
+//        Column foundColumn = findColumn(uuid);
+//        if (foundColumn != null) {
+//            columns.remove(foundColumn);
+//        }
+//    }
+
 
     public Column getColumn(int index) {
         if (index >= 0 && index < columns.size()) {

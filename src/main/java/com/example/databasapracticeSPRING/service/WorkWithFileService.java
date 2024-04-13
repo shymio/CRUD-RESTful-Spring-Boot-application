@@ -60,7 +60,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class TableService {
+public class WorkWithFileService {
 
 //     запись таблиц в файл
     public void writeTablesToFile(String filename, List<Table> tables, int[] columnWidths) {
@@ -124,7 +124,7 @@ public class TableService {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = parseFixedWidthString(line, columnWidths);
-                Column column = new Column(UUID.fromString(parts[0].trim()), Integer.parseInt(parts[1].trim()),
+                Column column = new Column(UUID.fromString(parts[0].trim()), parts[1].trim(),
                         parts[2].trim(), parts[3].trim(), Integer.parseInt(parts[4].trim()),
                         parts[5].trim(), parts[6].trim());
                 columns.add(column);

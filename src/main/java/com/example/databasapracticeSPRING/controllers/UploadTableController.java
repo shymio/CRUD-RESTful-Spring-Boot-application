@@ -2,8 +2,7 @@
 package com.example.databasapracticeSPRING.controllers;
 
 import com.example.databasapracticeSPRING.model.DataBase;
-import com.example.databasapracticeSPRING.service.TableService;
-import com.example.databasapracticeSPRING.model.Column;
+import com.example.databasapracticeSPRING.service.WorkWithFileService;
 import com.example.databasapracticeSPRING.model.Table;
 
 import jakarta.servlet.http.HttpSession;
@@ -16,35 +15,56 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
-import javax.script.ScriptContext;
 import java.util.List;
 
 @RestController
 public class UploadTableController {
 
-    private final TableService tableService;
+    private final WorkWithFileService workWithFileService;
 
     @Autowired
-    public UploadTableController(TableService columnService) {
-        this.tableService = columnService;
+    public UploadTableController(WorkWithFileService workWithFileService) {
+        this.workWithFileService = workWithFileService;
     }
 
     @GetMapping("/tables")
     public ResponseEntity<String> getColumnsFromFile(@RequestParam String filename, @RequestParam int[] columnWidths, HttpSession session) {
-        List<Table> tables = tableService.readFromFileTable(filename, columnWidths);
-
+        DataBase dataBase = (DataBase) session.getAttribute("dataBase");
+        List<Table> tables = workWithFileService.readFromFileTable(filename, columnWidths);
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_DISPOSITION, "inline");
-        DataBase dataBase = new DataBase();
-        for (Table table : tables) {
-            dataBase.addTable(table);
+
+        if (dataBase != null) {
+            for (Table table : tables) {
+                dataBase.addTable(table);
+            }
+        } else {
+            dataBase = new DataBase();
+            for (Table table : tables) {
+                dataBase.addTable(table);
+            }
         }
         session.setAttribute("dataBase", dataBase);
-
         return ResponseEntity.ok()
                 .headers(headers)
                 .contentType(MediaType.TEXT_PLAIN)
                 .body(dataBase.toString());
+
+
+//        List<Table> tables = tableService.readFromFileTable(filename, columnWidths);
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.add(HttpHeaders.CONTENT_DISPOSITION, "inline");
+//        DataBase dataBase = new DataBase();
+//        for (Table table : tables) {
+//            dataBase.addTable(table);
+//        }
+//        session.setAttribute("dataBase", dataBase);
+//
+//        return ResponseEntity.ok()
+//                .headers(headers)
+//                .contentType(MediaType.TEXT_PLAIN)
+//                .body(dataBase.toString());
     }
 }
 

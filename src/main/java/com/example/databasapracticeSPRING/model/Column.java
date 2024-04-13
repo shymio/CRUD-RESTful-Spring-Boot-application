@@ -2,7 +2,7 @@ package com.example.databasapracticeSPRING.model;
 import java.util.UUID;
 
 public class Column {
-    private int belongsToTable;
+    private String belongsToTable;
     private String phisical_name;
     private String data_type;
     private int field_length;
@@ -10,7 +10,7 @@ public class Column {
     private String comment;
     private UUID uuid;
 
-    public Column(UUID uuid, int belongsToTable, String phisical_name, String data_type, int field_length, String key_attribute, String comment) {
+    public Column(UUID uuid, String belongsToTable, String phisical_name, String data_type, int field_length, String key_attribute, String comment) {
         this.uuid = UUID.randomUUID();
         this.belongsToTable = belongsToTable;
         this.phisical_name = phisical_name;
@@ -26,8 +26,8 @@ public class Column {
         this.uuid = UUID.randomUUID();
     }
 
-    public void setBelongsToTable(int belongsToTable) {this.belongsToTable = belongsToTable;}
-    public int getBelongsToTable() {return belongsToTable;}
+    public void setBelongsToTable(String belongsToTable) {this.belongsToTable = belongsToTable;}
+    public String getBelongsToTable() {return belongsToTable;}
 
     public void setName(String phisical_name) {this.phisical_name = phisical_name;}
     public String getName() {return phisical_name;}
@@ -45,7 +45,7 @@ public class Column {
     public String getComment() {return comment;}
 
     public String toString() {
-        return "\n" + "№ таблицы = " + belongsToTable + ", " +
+        return "\n" + "Имя таблицы = " + belongsToTable + ", " +
                 "uuid = " + uuid + ", " +
                 "Имя колонки = " + phisical_name + ", " +
                 "Тип данных = " + data_type + ", " +

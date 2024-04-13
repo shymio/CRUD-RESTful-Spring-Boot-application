@@ -1,14 +1,9 @@
 package com.example.databasapracticeSPRING.model;
 
-import com.example.databasapracticeSPRING.service.TableService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,11 +34,10 @@ public class DataBase {
     public void addColumnsToTablesFromList(List<Column> columns) {
         for (Column column : columns) {
             for (Table table : tables) {
-                if (getTableIndexByName(table.getPhisical_name()) + 1 == (column.getBelongsToTable())) {
+                if (table.getPhisical_name().equals(column.getBelongsToTable())) {
                     table.addColumn(column);
                     break;
                 }
-//                    getTable(getTableIndexByName(table.getPhisical_name())).addColumn(column);
             }
         }
     }
