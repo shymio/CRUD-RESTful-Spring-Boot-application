@@ -20,7 +20,7 @@ public class InfoController {
     public ResponseEntity<?> getInfo(HttpSession session) {
         DataBase dataBase = (DataBase) session.getAttribute("dataBase");
         Map<String, Object> information = new LinkedHashMap<>(); // Changed to Object type
-        information.put("name", "Table");
+        information.put("name", "DataBase");
         information.put("version", "1.0");
         information.put("javaVersion", "21");
         information.put("author", "Sofia Ushakova");

@@ -59,6 +59,19 @@ public class DataBase {
         }
     }
 
+    public boolean hasTableWithName(Column column) {
+        for (Table table : tables) {
+            if (column.getBelongsToTable().equals(table.getPhisical_name()))
+                return true;
+        } return false;
+    }
+
+    // добавить одну колонку из списка в таблицу по имени
+    public void addOneColumnToTable(Column column) {
+        if (findTable(column.getBelongsToTable()) != null)
+            findTable(column.getBelongsToTable()).addColumn(column);
+    }
+
     public void addColumnsToTablesFromList(List<Column> columns) {
         for (Column column : columns) {
             for (Table table : tables) {
