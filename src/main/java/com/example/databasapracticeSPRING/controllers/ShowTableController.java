@@ -13,40 +13,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class ShowTableController {
 
     @GetMapping("/show")
-    public ResponseEntity<Table> showTable(@RequestParam String tableName, HttpSession session) {
+    public ResponseEntity<?> showTable(@RequestParam String tableName, HttpSession session) {
         try {
             DataBase dataBase = (DataBase) session.getAttribute("dataBase");
             if (dataBase == null) {
-                throw new RuntimeException("DataBase object not found in session");
+                throw new RuntimeException("Ошибка: объект базы данных не найден в сессии.");
             }
 
-            dataBase.findTable(tableName);
-            ResponseEntity<Table> response = dataBase.showTable(tableName);
-
-            if (response.getStatusCode() == HttpStatus.NOT_FOUND) {
-                return response;
+            Table table = dataBase.findTable(tableName);
+            if (table == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Таблица с именем " + tableName + " не найдена.");
             } else {
-                return response;
+                return ResponseEntity.ok(table);
             }
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Внутренняя ошибка сервера: " + e.getMessage());
         }
-
-//        try {
-//            DataBase dataBase = (DataBase) session.getAttribute("dataBase");
-//            dataBase.findTable(tableName);
-//
-//            ResponseEntity<Table> response = dataBase.showTable(tableName);
-//
-//            if (response.getStatusCode() == HttpStatus.NOT_FOUND) {
-//                return response;
-//            } else {
-//                return response;
-//            }
-//        } catch (IllegalArgumentException e) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-//        }
     }
 }

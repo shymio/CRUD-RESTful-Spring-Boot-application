@@ -1,1 +1,3 @@
-3d9e841e-3741-4ade-9110-5794b6d8b38a  products    Age       INT       3          Age in years        
+d2620b39-4d2d-42c8-b784-d78985eb5b1c  users       ID        INT       10 PRIMARY Identifier          
+6464730e-b83f-454c-a10a-23cda52af039  users       UserName  VARCHAR   50 UNIQUE  Unique username     
+9daf7776-0334-4d23-8204-61498e4427fa  products    Age       INT       3          Age in years        

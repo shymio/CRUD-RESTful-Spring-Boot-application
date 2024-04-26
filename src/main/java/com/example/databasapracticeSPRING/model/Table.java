@@ -73,33 +73,33 @@ public class Table {
         return null;
     }
 
-    public ResponseEntity<Column> showColumn(UUID uuid) {
-        try {
-            Column foundService = findColumn(uuid);
-            if (foundService != null) {
-                return ResponseEntity.ok(foundService);
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-            }
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-    }
+//    public ResponseEntity<Column> showColumn(UUID uuid) {
+//        try {
+//            Column foundService = findColumn(uuid);
+//            if (foundService != null) {
+//                return ResponseEntity.ok(foundService);
+//            } else {
+//                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+//            }
+//        } catch (IllegalArgumentException e) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+//        }
+//    }
 
-    public ResponseEntity<String> deleteColumn(String uuidString) {
-        try {
-            UUID uuid = UUID.fromString(uuidString);
-            Column foundColumn = findColumn(uuid);
-            if (foundColumn != null) {
-                columns.remove(foundColumn);
-                return ResponseEntity.ok().body("Колонка успешно удалена");
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Колонка не найдена");
-            }
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("Неверный формат UUID");
-        }
-    }
+//    public ResponseEntity<String> deleteColumn(String uuidString) {
+//        try {
+//            UUID uuid = UUID.fromString(uuidString);
+//            Column foundColumn = findColumn(uuid);
+//            if (foundColumn != null) {
+//                columns.remove(foundColumn);
+//                return ResponseEntity.ok().body("Колонка успешно удалена");
+//            } else {
+//                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Колонка не найдена");
+//            }
+//        } catch (IllegalArgumentException e) {
+//            return ResponseEntity.badRequest().body("Неверный формат UUID");
+//        }
+//    }
 
 
 //    public void deleteColumn(String uuidString) {

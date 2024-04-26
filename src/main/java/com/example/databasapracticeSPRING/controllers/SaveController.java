@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +31,15 @@ public class SaveController {
 
     @GetMapping("/save")
     public ResponseEntity<?> saveInFile(@RequestParam String fileNameColumn, @RequestParam String fileNameTable, HttpSession session) {
+        if (fileNameColumn == null || fileNameTable == null) {
+            // Проверка наличия хотя бы одного параметра в запросе
+            if (fileNameColumn == null && fileNameTable == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ошибка: не указаны необходимые параметры в URL запросе.");
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ошибка: не указаны все необходимые параметры в URL запросе.");
+            }
+        }
+
         // Проверка наличия объекта базы данных в сессии
         DataBase dataBase = (DataBase) session.getAttribute("dataBase");
         if (dataBase == null) {
