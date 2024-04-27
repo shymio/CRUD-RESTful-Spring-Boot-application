@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.sqrt;
+
 @RestController
 public class StatisticController {
     @GetMapping("/statistics")

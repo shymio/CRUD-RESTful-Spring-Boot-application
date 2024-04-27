@@ -1,19 +1,13 @@
 package com.example.databasapracticeSPRING.model;
-import java.io.FileWriter;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
-import com.example.databasapracticeSPRING.model.Column;
 import org.apache.commons.lang3.time.DateUtils;
 import java.util.Date;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.List;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 public class Table {
     private String phisical_name;
@@ -25,8 +19,7 @@ public class Table {
         this.phisical_name = phisical_name;
         this.description = description;
         this.creationDate = formatDate(DateUtils.truncate(new Date(), Calendar.MINUTE));
-        this.columns = new ArrayList<>();
-    }
+        this.columns = new ArrayList<>(); }
 
     public Table() {this.columns = new ArrayList<>();}
 
@@ -41,94 +34,31 @@ public class Table {
 
     public String formatDate(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-        return dateFormat.format(date);
-    }
+        return dateFormat.format(date); }
 
-    public int size() {
-        return columns.size();
-    }
+    public int size() {return columns.size();}
 
-    public void setColumn(List<Column> columns) {
-        this.columns = columns;
-    }
+    public void setColumn(List<Column> columns) {this.columns = columns;}
 
-    public void addColumn(Column column) {
-        this.columns.add(column);
-    }
+    public void addColumn(Column column) {this.columns.add(column);}
 
-    public void removeColumn(String columnName) {
-        columns.removeIf(column -> column.getName().equals(columnName));
-    }
+    public void removeColumn(String columnName) {columns.removeIf(column -> column.getName().equals(columnName));}
 
-    public List<Column> getColumn() {
-        return columns;
-    }
+    public List<Column> getColumn() {return columns;}
 
     public Column findColumn(UUID uuid) {
         for (Column column : columns) {
             if (column.getUuid().equals(uuid)) {
-                return column;
-            }
-        }
-        return null;
+                return column;}
+        } return null;
     }
-
-//    public ResponseEntity<Column> showColumn(UUID uuid) {
-//        try {
-//            Column foundService = findColumn(uuid);
-//            if (foundService != null) {
-//                return ResponseEntity.ok(foundService);
-//            } else {
-//                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-//            }
-//        } catch (IllegalArgumentException e) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-//        }
-//    }
-
-//    public ResponseEntity<String> deleteColumn(String uuidString) {
-//        try {
-//            UUID uuid = UUID.fromString(uuidString);
-//            Column foundColumn = findColumn(uuid);
-//            if (foundColumn != null) {
-//                columns.remove(foundColumn);
-//                return ResponseEntity.ok().body("Колонка успешно удалена");
-//            } else {
-//                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Колонка не найдена");
-//            }
-//        } catch (IllegalArgumentException e) {
-//            return ResponseEntity.badRequest().body("Неверный формат UUID");
-//        }
-//    }
-
-
-//    public void deleteColumn(String uuidString) {
-//        UUID uuid = UUID.fromString(uuidString);
-//        Column foundColumn = findColumn(uuid);
-//        if (foundColumn != null) {
-//            columns.remove(foundColumn);
-//        }
-//    }
-
 
     public Column getColumn(String columnName) {
         for (Column column : columns) {
             if (column.getName().equals(columnName)) {
-                return column;
-            }
-        }
-        return null;
+                return column; }
+        } return null;
     }
-
-
-//    public void removeColumn(String columnName) {
-//        for (int i = 0; i < columns.size(); i++) {
-//            if (columns.get(i).getName().equals(columnName)) {
-//                columns.remove(i);
-//                break;
-//            }
-//        }
-//    }
 
     public String toString() {
         return "\n" + "Имя таблицы = " + phisical_name + ' '

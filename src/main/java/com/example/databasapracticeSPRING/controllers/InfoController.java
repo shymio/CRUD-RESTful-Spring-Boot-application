@@ -1,16 +1,12 @@
 package com.example.databasapracticeSPRING.controllers;
 
-import com.example.databasapracticeSPRING.model.Column;
-import com.example.databasapracticeSPRING.model.Table;
 import com.example.databasapracticeSPRING.model.DataBase;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
